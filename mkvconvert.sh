@@ -1,5 +1,5 @@
-#!/bin/sh
-# version 1.0.1
+#!/usr/bin/env bash
+# version 1.0.2
 #
 # Requires installed and working Homebrew, then: brew install ffmpeg
 #
@@ -8,7 +8,6 @@
 # to the same directory inside a CONVERTED directory.
 
 STARTDIR=$1
-EXCLUDE=$2
 
 if [ "$STARTDIR" = "" ] || [ "$STARTDIR" = "?" ] || [[ "$STARTDIR" = *-h* ]]; then
 	ECHO ""
@@ -19,13 +18,13 @@ fi
 
 IFS=$'\n'
 
-cd $STARTDIR
+cd "$STARTDIR" || exit
 
 for FILENAME in *.mkv
 do
 echo "Processing: $FILENAME"
 
-ffmpeg -i $FILENAME -map 0:0 -map 0:2 -vcodec copy -acodec copy CONVERTED/$FILENAME
+ffmpeg -i "$FILENAME" -map 0:0 -map 0:2 -vcodec copy -acodec copy CONVERTED/"$FILENAME"
 
 done
 
